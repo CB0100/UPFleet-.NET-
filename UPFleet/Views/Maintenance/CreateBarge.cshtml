@@ -1,0 +1,59 @@
+﻿@model UPFleet.Models.Barge
+@{
+    ViewData["Title"] = "Add Barge";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center text-primary">Add Barges</h3>
+                </div>
+                <form method="post" asp-action="CreateBarge" asp-controller="Maintenance" id="formid">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="Barge_Name">Barge Name</label>
+                            <input type="text" asp-for="Barge_Name" class="form-control" id="Barge_Name" placeholder="Enter the Barge Name" />
+                            <span asp-validation-for="Barge_Name" id="erBarge_Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Size"></label>
+                            <input type="text" asp-for="Size" class="form-control" id="size" placeholder="Enter the Size of the Barge" />
+                            <span asp-validation-for="Size" id="ersize" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Rate">Rate ($)</label>
+                            <input type="text" class="form-control" asp-for="Rate" style="text-align:right;" id="rate" value="0" placeholder="Enter the Rate of the Barge" />
+                            <span asp-validation-for="Rate" id="errate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Owner"></label>
+                            <select asp-for="Owner" asp-items="@(new SelectList(ViewBag.message, "OwnerName", "OwnerName"))" id="owner" class="form-control form-select"></select>
+                            <span asp-validation-for="Owner" id="erowner" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <input type="text" class="form-control" asp-for="Description" id="description" placeholder="Enter the Description of the Barge" />
+                            <span asp-validation-for="Description" id="erdescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="display: flex;align-items: center;justify-content: space-between;">
+                            <input type="submit" class="btn btn-primary m-2" value="Submit" id="btnid" />
+                            <a href="@Url.Action("HomePage", "Home")" class="btn btn-danger m-2 float-sm-end" style="width: 25% !important">Back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/wwwroot/js/jscreatebarge.js"></script>
+}
+

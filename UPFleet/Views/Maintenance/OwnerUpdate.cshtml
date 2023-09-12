@@ -1,0 +1,62 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "Add/Edit Owners";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center text-primary">Add/Update Owner</h3>
+                </div>
+                <form method="post" action="@Url.Action("OwnerUpdate", "Maintenance")" id="formid">
+                    <input type="hidden" name="ID" id="ownerID" value="@Model.ID" />
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="OwnerName">Owner=CustomerID in PeachTree</label>
+                            <input type="text" name="OwnerName" id="owner_name" class="form-control" value="@Model.OwnerName" />
+                            <span class="text-danger" id="erowner_name"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Company">Company-Refereance Only</label>
+                            <input type="text" name="Company" id="company" class="form-control" value="@Model.Company" />
+                            <span class="text-danger" id="ercompany"></span>
+                        </div>
+                        <div class="form-group mt-5" style="display:flex;">
+                            <label for="Account">Income Account For Peach Tree</label>
+                            <input type="text" name="Account" id="account" class="form-control" value="@Model.Account" />
+                            <span class="text-danger" id="eraccount"></span>
+                        </div>
+                        <div class="form-group" style="display: flex;align-items: center;justify-content: space-between;">
+                            <div class="m-1">
+                                @if (Model.CurrentIndex > 0)
+                                {
+                                    <button type="button" id="previousID"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+                                }
+                                <label>@(Model.CurrentIndex+1)</label>/<label>@TempData["data"]</label>
+                                @if (Model.CurrentIndex + 1 < Convert.ToInt32(TempData["data"]))
+                                {
+                                    <button type="button" id="nextID"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                }
+                            </div>
+                            <input type="submit" class="btn btn-primary m-1" value="Submit" id="btnid" />
+                            <a href="@Url.Action("GoBack", "Maintenance")" class="btn btn-danger m-1 float-sm-end" style="width: 25% !important">Back</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/wwwroot/js/jsowner.js"></script>
+}
+

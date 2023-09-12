@@ -1,0 +1,46 @@
+﻿@model List<UPFleet.Models.Barge>
+@{
+    ViewData["Title"] = "Barge_By_Owner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="function-btn" style="margin-left: 100px;margin-bottom: 20px">
+        <a href="@Url.Action("GoBack", "Maintenance")" id="backbtn" class="btn-primary">Back</a>
+        <a id="prntbtn" style="display: block"><img src="~/wwwroot/image/printing.png"></a>
+    </div>
+    <div class="row" style="justify-content: center">
+
+        <div class="col-lg-10 border border-2">
+            <div class="filterdiv">
+                <span>Filter By Owner</span>
+                <select id="ownerDropdown" style="width: 30%;" class="form-control form-select home-select">
+                </select>
+                <hr />
+            </div>
+            <table class=" table table-striped table-responsive">
+                <thead>
+                    <tr style="text-align: left">
+                        <th>Barge_Name</th>
+                        <th>Size</th>
+                        <th>Rate</th>
+                        <th>Owner</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div id="loader-overlay" style="display:none;">
+        <div id="loader" class="popup-loader">
+            <img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/wwwroot/js/jsbargereport.js"></script>
+}

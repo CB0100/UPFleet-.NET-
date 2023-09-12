@@ -1,0 +1,157 @@
+﻿@model List<UPFleet.ViewModels.UPFleetViewModel>
+@using UPFleet.ViewModels
+
+<html>
+<head>
+</head>
+<body>
+
+    @{
+        var pageQueryString = HttpContext.Current.Request.QueryString["page"];
+        var page = !string.IsNullOrEmpty(pageQueryString) ? int.Parse(pageQueryString) : 0;
+        const int pageSize = 1; // Set your desired page size here
+    }
+    <div class="container" id="printTable">
+        <div class="function-btn">
+            <a href="@Url.Action("GoBack", "Maintenance")" id="backbtn" class="btn-primary">Back</a>
+            <a id="prntbtn" title="Print This Report"><img src="~/wwwroot/image/printing.png"></a>
+        </div>
+    </div>
+        @foreach (var item in Model.Skip(page * pageSize).Take(pageSize))
+        {
+            <div class="c">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <h4>@item.Owner.Company</h4>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <h4>@item.Owner.OwnerName</h4>
+                        </div>
+                    </div>
+                    <h4>@item.Owner.Address1</h4>
+                    <h4>@item.Owner.Address2</h4>
+                    <h4 class="Owner-data">
+                        <span>@item.Owner.City</span>
+                        <span>@item.Owner.State</span>
+                        <span>@item.Owner.Zip</span>
+                    </h4>
+                </div>
+                <div>
+                    @foreach (var barge in item.BargeList)
+                    {
+                        foreach (var tranaction in item.Transactionslist.Where(m => m.Barge == barge.Barge_Name))
+                        {
+                            <div class="row transactions-head">
+                                <div class="col-sm-6 col-md-6 col-6 transactions-data">
+                                    <h5>Barge:<span>@tranaction.Barge</span></h5>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-6 transactions-data">
+                                    <h5>Rate:<span>$@tranaction.Rate</span></h5>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-6 transactions-data">
+                                    <h5>Status:<span>@tranaction.Status</span></h5>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-6 transactions-data">
+                                    <h5>Tranaction #:<span>@tranaction.TransactionNo</span></h5>
+                                </div>
+                            </div>
+                            <div class=" table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width="250px">From</th>
+                                            <th>To</th>
+                                            <th>Cost</th>
+                                            <th>Transfer #</th>
+                                            <th>Status</th>
+                                            <th>Days In</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var transfer in item.TransferList.Where(m => m.Transaction == tranaction.TransactionNo))
+                                        {
+                                            <tr>
+                                                <td>@transfer.From</td>
+                                                <td>@transfer.To</td>
+                                                @if (tranaction.Rate != null)
+                                                {
+                                                    <td>
+                                                        $@(transfer.DaysIn * tranaction.Rate)
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        $0
+                                                    </td>
+                                                }
+
+                                                <td>@transfer.TransferNO</td>
+                                                <td>@transfer.Status</td>
+                                                @if (transfer.DaysIn != null)
+                                                {
+                                                    <td>
+                                                        $@(transfer.DaysIn )
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        0
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td colspan="6">
+                                                <p>Summary for Transaction# @tranaction.TransactionNo (@item.TransferList.Count(m => m.Transaction == tranaction.TransactionNo) details Record)</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Sum</td>
+                                            @if (tranaction.Rate != null)
+                                            {
+                                                <td colspan="2">
+                                                    $@((tranaction.Rate) * item.TransferList.Where(m => m.Transaction == tranaction.TransactionNo).Sum(t => t.DaysIn))
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td colspan="2">$0</td>
+                                            }
+                                            <td colspan="2">@item.TransferList.Where(m => m.Transaction == tranaction.TransactionNo).Sum(t => t.DaysIn)</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <div class="container navcontainer" style="">
+        <nav aria-label="Page navigation">
+            @Html.Partial("PaginationPartial", new PaginationViewModel { TotalPages = (int)Math.Ceiling((double)Model.Count / pageSize), CurrentPage = page })
+        </nav>
+    </div>
+</body>
+</html>
+@{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#prntbtn").on("click", function () {
+                $(".function-btn").css("display", "none");
+                $(".navcontainer").css("display", "none"); // Hide the pagination container
+                window.print();
+                $(".function-btn").css("display", "initial");
+                $(".navcontainer").css("display", "initial"); // Show the pagination container again after printing
+            });
+        });
+    </script>
+}

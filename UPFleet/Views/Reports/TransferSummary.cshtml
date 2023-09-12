@@ -1,0 +1,119 @@
+﻿@model IEnumerable<UPFleet.ViewModels.UPFleetViewModel>
+
+<html>
+<head>
+</head>
+<body>
+    <div class="function-btn">
+        <a href="@Url.Action("GoBack", "Maintenance")" id="backbtn" class="btn-primary">Back</a>
+        <a id="prntbtn" title="Print This Report">
+            <img src="~/wwwroot/image/printing.png">
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="printTable">
+            <thead>
+                <tr>
+                    <th style="width: 235px;">Barge Name</th>
+                    <th style="width: 270px;">Owner</th>
+                    <th style="width: 160px;">Total Cost</th>
+                    <th style="width: 120px;">Transaction No</th>
+                    <th style="width: 120px;">Barge Size</th>
+                    <th style="width: 120px;">Rate</th>
+                    <th style="width: 155px">Total Days</th>
+                    <th style="width: 130px;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transferView in Model)
+                {
+                    if (transferView.TransferList.Any())
+                    {
+                        <tr>
+                            <td style="width: 235px;">@transferView.Barge.Barge_Name</td>
+                            <td style="width: 270px;">@transferView.Barge.Owner</td>
+                            @if (transferView.Barge.Rate != 0)
+                            {
+                                <td style="width: 160px;">$@(Convert.ToInt32(transferView.Barge.Rate) * transferView.TransferList.Sum(t => t.DaysIn))</td>
+                            }
+                            else
+                            {
+                                <td style="width: 160px;">$0</td>
+                            }
+                            <td style="width: 120px;">@transferView.Transaction.TransactionNo</td>
+                            <td style="width: 120px;">@transferView.Barge.Size</td>
+                            <td style="width: 120px;">$@transferView.Barge.Rate</td>
+                            <td style="width: 155px">@transferView.TransferList.Sum(t => t.DaysIn)</td>
+                            <td style="width: 130px;">@transferView.Transaction.Status</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="padding:10px 0;">
+                                <table class="table table-bordered">
+
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 235px;">From</th>
+                                            <th style="width: 270px;">To</th>
+                                            <th style="width: 160px;">Cost</th>
+                                            <th style="width: 360px;" colspan="3"></th>
+                                            <th style="width: 155px">Days In</th>
+                                            <th style="width: 130px;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var transfer in transferView.TransferList)
+                                        {
+                                            <tr>
+                                                <td>@transfer.From</td>
+                                                <td>@transfer.To</td>
+                                                @if (transferView.Barge.Rate != 0)
+                                                {
+                                                    <td>
+                                                        $@(transfer.DaysIn * transferView.Barge.Rate)
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        $0
+                                                    </td>
+                                                }
+
+                                                <td colspan="3"></td>
+                                                @if (transfer.DaysIn != 0)
+                                                {
+                                                    <td>@(transfer.DaysIn)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>0</td>
+                                                }
+                                                <td>@transfer.Status</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+@{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    //<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#prntbtn").click(function () {
+                $(".function-btn").hide();
+                window.print();
+                $(".function-btn").show();
+            });
+        });
+    </script>
+}

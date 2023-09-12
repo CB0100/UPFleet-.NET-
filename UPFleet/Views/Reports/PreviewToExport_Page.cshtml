@@ -1,0 +1,58 @@
+﻿@model List<UPFleet.ViewModels.UPFleetViewModel>
+
+<html>
+<head>
+</head>
+<body>
+
+    <div class="function-btn">
+        <a href="@Url.Action("GoBack", "Maintenance")" id="backbtn" class="btn-primary">Back</a>
+        <a id="prntbtn" title="Print This Report"><img src="~/wwwroot/image/printing.png"></a>
+    </div>
+    <div class="filterdiv">
+        <span>Filter By Owner</span>
+        <select id="ownerDropdown" style="width: 30%;" class="form-control form-select home-select">
+        </select>
+        <span>Filter By Transaction Status</span>
+        <select id="transStatusDropdown" style="width: 30%;" class="form-control form-select home-select">
+            <option value="Select Status">Select Status/None</option>
+            <option value="In">In</option>
+            <option value="Out">Out</option>
+            <option value="Last switched">Last switched</option>
+            <option value="To Bill">To Bill</option>
+            <option value="Billed">Billed</option>
+        </select>
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate" name="fromDate">
+
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate" name="toDate">
+        <hr />
+    </div>
+    <table class="table" id="printTable">
+        <thead>
+            <tr>
+                <th>Barge Name</th>
+                <th>Owner</th>
+                <th>Total Cost</th>
+                <th>Transaction No</th>
+                <th>Barge Size</th>
+                <th>Rate</th>
+                <th>Total Days</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="transactiontable-body">
+            
+        </tbody>
+    </table>
+    <div id="loader-overlay" style="display:none;">
+        <div id="loader" class="popup-loader">
+            <img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />
+        </div>
+    </div>
+</body>
+</html>
+@section Scripts{
+    <script src="~/wwwroot/js/jspreviewtoexport.js"></script>
+}
