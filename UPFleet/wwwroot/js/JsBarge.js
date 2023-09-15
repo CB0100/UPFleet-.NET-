@@ -167,7 +167,7 @@ $(document).ready(function () {
             },
             error: function (error) {
                 $('#loader-overlay').hide();
-                alert("Error checking duplicate barge: " + error.responseText);
+                alert("Error impoting Barges: " + error.responseText);
             }
         });
     }

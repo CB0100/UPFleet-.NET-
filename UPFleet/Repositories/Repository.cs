@@ -9,7 +9,7 @@ namespace UPFleet.Repositories
 {
     public class Repository : IRepository
     {
-        private ApplicationDbContext _dbcontext=new ApplicationDbContext();       
+        private ApplicationDbContext _dbcontext = new ApplicationDbContext();
 
         public List<Barge> GetBargeList()
         {
@@ -68,7 +68,7 @@ namespace UPFleet.Repositories
             var bargeslist = GetBargeList();
             var ownerlist = GetOwnerList();
             var transactionslist = Status == "Billed" ? GetTransactionListforBilled() : GetTransactionListforNotBilled();
-            var transferlist = _dbcontext.Transfers.Where(m => Status == "Billed" ? m.Status == "Billed" : m.Status != "Billed").ToList();
+            var transferlist = _dbcontext.Transfers.Where(m => (Status == "Billed" ? m.Status == "Billed" : m.Status != "Billed") && (m.From != null || m.To != null)).ToList();
 
             var Viewmodelobj = (
                 from o in ownerlist
@@ -201,7 +201,7 @@ namespace UPFleet.Repositories
                 data.Status = transfer.Status;
                 data.InsuranceDays = transfer.InsuranceDays;
                 data.FromIns = transfer.FromIns;
-                if (transfer.From!=null&&transfer.To!=null)
+                if (transfer.From != null && transfer.To != null)
                 {
                     TimeSpan duration = (TimeSpan)(transfer.To - transfer.From);
                     data.DaysIn = (int)duration.TotalDays;
@@ -254,7 +254,7 @@ namespace UPFleet.Repositories
                             data.DaysIn = (int)duration.TotalDays;
                         }
 
-                        if (data.To != null && data.FromIns != null   )
+                        if (data.To != null && data.FromIns != null)
                         {
                             DateTime? toDateTime = data.To;
                             if (toDateTime.HasValue && DateTime.TryParse(data.FromIns, out var fromInsDateTime))
@@ -288,7 +288,7 @@ namespace UPFleet.Repositories
                 return false;
             }
         }
-        public bool UpdateTransaction(double transactionInput, string status, double Rate)
+        public bool UpdateTransaction(double? transactionInput, string status, double Rate)
         {
             var transaction = _dbcontext.Transactions.FirstOrDefault(m => m.TransactionNo == transactionInput);
             if (transaction != null)
@@ -304,11 +304,11 @@ namespace UPFleet.Repositories
             }
         }
 
-        public bool DeleteTransaction(double transactionInput)
+        public bool DeleteTransaction(double? transactionInput)
         {
             try
             {
-                var transaction = _dbcontext.Transactions.FirstOrDefault(t => Equals(t.TransactionNo, (double)(transactionInput)));
+                var transaction = _dbcontext.Transactions.FirstOrDefault(m => m.TransactionNo == transactionInput);
                 var transfers = _dbcontext.Transfers.Where(m => m.Transaction == transactionInput).ToList();
                 if (transaction != null)
                 {

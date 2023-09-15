@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
+using System.Web;
 using System.Web.Mvc;
 using UPFleet.Models;
 using UPFleet.Repositories;
@@ -36,7 +37,7 @@ namespace UPFleet.Controllers
                 TempData["data"] = totalRecords;
 
                 // Create an anonymous object that includes the currentIndex
-                obj.CurrentIndex= currentIndex;
+                obj.CurrentIndex = currentIndex;
 
                 return View(obj);
             }
@@ -143,7 +144,7 @@ namespace UPFleet.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("Barges");
 
                 var headers = typeof(Barge).GetProperties();
-                for (int col = 1; col <= headers.Length - 1; col++)
+                for (int col = 1; col <= headers.Length - 2; col++)
                 {
                     worksheet.Cells[1, col].Value = headers[col].Name;
                 }
@@ -151,7 +152,7 @@ namespace UPFleet.Controllers
                 // Add data
                 for (int row = 2; row <= barges.Count() + 1; row++)
                 {
-                    for (int col = 1; col <= headers.Length - 1; col++)
+                    for (int col = 1; col <= headers.Length - 2; col++)
                     {
                         worksheet.Cells[row, col].Value = headers[col].GetValue(barges[row - 2]);
                     }
@@ -181,39 +182,47 @@ namespace UPFleet.Controllers
             }
         }
         [HttpPost]
-        public ActionResult CheckDuplicateBarge(IFormFile excelFile)
+        public ActionResult CheckDuplicateBarge(HttpPostedFileBase excelFile)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            try
+            if (excelFile != null && excelFile.ContentLength > 0)
             {
-                // Use a library like EPPlus or ClosedXML to read the Excel file
-                using (var package = new ExcelPackage(excelFile.OpenReadStream()))
+                try
                 {
-                    var worksheet = package.Workbook.Worksheets[0];
-                    var bargeNames = worksheet.Cells[2, 1, worksheet.Dimension.Rows, 1]
-                                         .Select(cell => cell.Value?.ToString())
-                                         .Where(name => !string.IsNullOrEmpty(name))
-                                         .ToList();
+                    // Use a library like EPPlus or ClosedXML to read the Excel file
+                    using (var package = new ExcelPackage(excelFile.InputStream))
+                    {
+                        var worksheet = package.Workbook.Worksheets[0];
+                        var bargeNames = worksheet.Cells[2, 1, worksheet.Dimension.Rows, 1]
+                                             .Select(cell => cell.Value?.ToString())
+                                             .Where(name => !string.IsNullOrEmpty(name))
+                                             .ToList();
 
-                    var duplicates = bargeNames
-                    .Where(name => _repository.GetBargeList().Any(b => b.Barge_Name == name))
-                    .ToList();
-                    var totalnewbargescount = bargeNames.Count() - duplicates.Count();
-                    if (duplicates.Count > 0)
-                    {
-                        return Json(new { isDuplicate = true, message = "Duplicate barge names found: " + string.Join(", ", duplicates), totalduplicatebarge = duplicates.Count(), totalnewbarges = totalnewbargescount }, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        return Json(new { isDuplicate = false }, JsonRequestBehavior.AllowGet);
+                        var existingBargeNames = new HashSet<string>(_repository.GetBargeList().Select(b => b.Barge_Name));
+                        var duplicates = bargeNames.Where(name => existingBargeNames.Contains(name)).ToList();
+
+                        var totalnewbargescount = bargeNames.Count() - duplicates.Count();
+                        if (duplicates.Count > 0)
+                        {
+                            return Json(new { isDuplicate = true, message = "Duplicate barge names found: " + string.Join(", ", duplicates), totalduplicatebarge = duplicates.Count(), totalnewbarges = totalnewbargescount }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { isDuplicate = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "An error occurred during duplicate check.");
+                }
             }
-            catch (Exception)
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "An error occurred during duplicate check.");
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "An error occurred importing. Please try again later.");
             }
         }
+
 
 
         [HttpPost]
@@ -534,7 +543,7 @@ namespace UPFleet.Controllers
 
         //Updating Transaction deatils on clicking Update transaction button..
         [HttpGet]
-        public ActionResult Update_transaction(double transactionInput, string status, double Rate)
+        public ActionResult Update_transaction(double? transactionInput, string status, double Rate)
         {
 
             var result = _repository.UpdateTransaction(transactionInput, status, Rate);
@@ -558,7 +567,7 @@ namespace UPFleet.Controllers
 
         //Deleting a transaction and all transfer realated to that transaction... 
         [HttpGet]
-        public ActionResult Delete_transaction(double transactionInput)
+        public ActionResult Delete_transaction(double? transactionInput)
         {
             var result = _repository.DeleteTransaction(transactionInput);
             var response = "Data saved Successfully.";

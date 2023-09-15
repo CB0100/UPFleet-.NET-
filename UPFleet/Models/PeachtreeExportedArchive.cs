@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UPFleet.Models
 {
-    public partial class PeachtreeExportedArchive
+    [Table("PeachtreeExportedArchive")]
+    public class PeachtreeExportedArchive
     {
         public string Owner { get; set; }
 
         public string SalesOrder { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public string Closed { get; set; }
 
@@ -25,9 +26,9 @@ namespace UPFleet.Models
         [Column("\"Sales Tax ID\"")]
         public string SalesTaxId { get; set; }
 
-        public double NumDistributions { get; set; }
+        public double? NumDistributions { get; set; }
 
-        public double Transfer { get; set; }
+        public double? Transfer { get; set; }
 
         public string Qnty { get; set; }
 
@@ -38,9 +39,9 @@ namespace UPFleet.Models
         [Column("GLaccount")]
         public string Glaccount { get; set; }
 
-        public double TaxType { get; set; }
+        public double? TaxType { get; set; }
 
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
         public string SalesTaxAuth { get; set; }
         [Column("ID")]

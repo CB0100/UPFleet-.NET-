@@ -2,81 +2,99 @@
 @{
     ViewData["Title"] = "Add/Update Barge";
 }
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
+<html>
+<head>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center text-primary">Add/Update Barge</h3>
-                </div>
-                <form method="post" action="@Url.Action("BargeUpdate", "Maintenance")" id="formid">
-                    <input type="hidden" id="bargeID" name="ID" value="@Model.ID" />
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label name="Barge_Name">Barge Name</label>
-                            <input type="text" name="Barge_Name" id="Barge_Name" class="form-control" placeholder="Enter the Barge Name" value="@Model.Barge_Name" />
-                            <span class="text-danger" id="erBarge_Name"></span>
-                        </div>
-                        <div class="form-group">
-                            <label name="size">Size</label>
-                            <input type="text" name="Size" id="size" class="form-control" placeholder="Enter the Size of the Barge" value="@Model.Size" />
-                            <span class="text-danger" id="ersize"></span>
-                        </div>
-                        <div class="form-group">
-                            <label name="Rate">Rate ($)</label>
-                            <input type="text" name="Rate" id="rate" class="form-control" style="text-align:right;" placeholder="Enter the Rate of the Barge" value="@Model.Rate />
-                            <span class="text-danger" id="errate"></span>
-                        </div>
-                        <div class="form-group">
-                            <label name="Owner">Owner</label>
-                            <select name="Owner" id="owner" class="form-control form-select">
-                                @foreach (var item in ViewBag.message)
-                                {
-                                    <option value="@item.OwnerName" @(item.OwnerName == Model.Owner ? "selected" : "")>@item.OwnerName</option>
-                                }
-                            </select>
-                            <span class="text-danger" id="erowner"></span>
-                        </div>
-                        <div class="form-group">
-                            <label name="Description">Description</label>
-                            <input type="text" name="Description" id="description" class="form-control" placeholder="Enter the Description of the Barge" value="@Model.Description" />
-                            <span class="text-danger" id="erdescription"></span>
-                        </div>
-                        <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
-                            <div class="m-1 col-md-4">
-                                @if (Model.CurrentIndex > 0)
-                                {
-                                    <button type="button" id="previousID"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-                                }
-                                <label>@(Model.CurrentIndex+1)</label>/<label>@TempData["MaxID"]</label>
-                                @if ((Model.CurrentIndex +1) < Convert.ToInt32(TempData["MaxID"].ToString()))
-                                {
-                                    <button type="button" id="nextID"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
-                                }
-
-                            </div>
-                            <div class="form-btn col-md-8">
-                                <input type="submit" class="btn btn-primary m-2" value="Submit" id="btnid" />
-                                <a href="@Url.Action("GoBack", "Maintenance")" class="btn btn-danger m-2 float-sm-end" style="width: 25% !important">Back</a>
-                                <button class="btn btn-success m-2" id="exportBtn" style="display:none;">Export</button>
-                                <button id="importBtn" class="btn btn-success m-2" style="display:none;">Import</button>
-                            </div>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center text-primary">Add/Update Barge</h3>
                     </div>
-                </form>
+                    <form method="post" action="@Url.Action("BargeUpdate", "Maintenance")" id="formid">
+                        <input type="hidden" id="bargeID" name="ID" value="@Model.ID" />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label name="Barge_Name">Barge Name</label>
+                                <input type="text" name="Barge_Name" id="Barge_Name" class="form-control" placeholder="Enter the Barge Name" value="@Model.Barge_Name" />
+                                <span class="text-danger" id="erBarge_Name"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="size">Size</label>
+                                <input type="text" name="Size" id="size" class="form-control" placeholder="Enter the Size of the Barge" value="@Model.Size" />
+                                <span class="text-danger" id="ersize"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Rate">Rate ($)</label>
+                                <input type="text" name="Rate" id="rate" class="form-control" style="text-align:right;" placeholder="Enter the Rate of the Barge" value="@Model.Rate    />
+                                <span class="text-danger" id="errate"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Owner">Owner</label>
+                                <select name="Owner" id="owner" class="form-control form-select">
+                                    @foreach (var item in ViewBag.message)
+                                    {
+                                        <option value="@item.OwnerName" @(item.OwnerName == Model.Owner ? "selected" : "")>@item.OwnerName</option>
+                                    }
+                                </select>
+                                <span class="text-danger" id="erowner"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Description">Description</label>
+                                <input type="text" name="Description" id="description" class="form-control" placeholder="Enter the Description of the Barge" value="@Model.Description" />
+                                <span class="text-danger" id="erdescription"></span>
+                            </div>
+                            <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                                <div class="m-1 col-md-4">
+                                    @if (Model.CurrentIndex > 0)
+                                    {
+                                        <button type="button" id="previousID"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+                                    }
+                                    <label>@(Model.CurrentIndex+1)</label>/<label>@TempData["MaxID"]</label>
+                                    @if ((Model.CurrentIndex + 1) < Convert.ToInt32(TempData["MaxID"].ToString()))
+                                    {
+                                        <button type="button" id="nextID"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                    }
 
+                                </div>
+                                <div class="form-btn col-md-8">
+                                    <input type="submit" class="btn btn-primary m-2" value="Submit" id="btnid" />
+                                    <a href="@Url.Action("GoBack", "Maintenance")" class="btn btn-danger m-2 float-sm-end" style="width: 25% !important">Back</a>
+                                    <button class="btn btn-success m-2" id="exportBtn">Export</button>
+                                    <input type="file" id="fileInput" accept=".xlsx, .xls" style="display:none;">
+                                    <button id="importBtn" class="btn btn-success m-2">Import</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div id="loader-overlay" style="display:none;">
+            <div id="loader" class="popup-loader">
+                <div class="spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                @*<img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />*@
             </div>
         </div>
-        <div class="col-sm-4"></div>
     </div>
-    <div id="loader-overlay" style="display:none;">
-        <div id="loader" class="popup-loader">
-            <img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />
-        </div>
-    </div>
-</div>
+</body>
+</html>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @section Scripts{

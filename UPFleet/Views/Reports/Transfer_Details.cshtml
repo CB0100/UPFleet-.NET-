@@ -42,7 +42,16 @@
                         @{
                             TimeSpan? ts = item.GetTransfer.To - item.GetTransfer.From;
                         }
-                        @ts?.TotalDays
+
+                        @if (ts.HasValue)
+                        {
+                            @ts.Value.TotalDays
+                        }
+                        else
+                        {
+                            // Handle the case when either 'To' or 'From' is null
+                            @("N/A")    // or any other appropriate message or value
+                        }
                     </td>
                     <td>@item.GetTransaction.Barge</td>
                     <td>@item.GetTransaction.Status</td>

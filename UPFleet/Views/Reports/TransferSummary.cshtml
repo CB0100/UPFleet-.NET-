@@ -8,7 +8,7 @@
         <a href="@Url.Action("GoBack", "Maintenance")" id="backbtn" class="btn-primary">Back</a>
         <a id="prntbtn" title="Print This Report">
             <img src="~/wwwroot/image/printing.png">
-        </a>
+        </a>*
     </div>
     <div class="table-responsive">
         <table class="table" id="printTable">
@@ -100,13 +100,25 @@
             </tbody>
         </table>
     </div>
-
+    <div id="loader-overlay">
+        <div id="loader" class="popup-loader">
+            <div class="spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            @*<img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />*@
+        </div>
+    </div>
 </body>
 </html>
 @{
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     //<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <script>
         $(document).ready(function () {
             $("#prntbtn").click(function () {
@@ -114,6 +126,7 @@
                 window.print();
                 $(".function-btn").show();
             });
+            $('#loader-overlay').hide();
         });
     </script>
 }

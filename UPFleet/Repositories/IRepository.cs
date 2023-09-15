@@ -25,7 +25,7 @@ namespace UPFleet.Repositories
         bool UpdateBarge(Barge barge);
         bool UpdateOwner(Owner owner);
         bool UpdateTransfer(Transfer transfer);
-        bool UpdateTransaction(double transactionInput, string status, double Rate);
-        bool DeleteTransaction(double transactionInput);
+        bool UpdateTransaction(double? transactionInput, string status, double Rate);
+        bool DeleteTransaction(double? transactionInput);
     }
 }
