@@ -11,8 +11,8 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
+            <div class="m-1 col-xl-4 col-md-3 col-sm-2"></div>
+            <div class="col-xl-4 col-md-6 col-sm-8">
 
                 <div class="card">
                     <div class="card-header">
@@ -51,8 +51,8 @@
                                 <input type="text" name="Description" id="description" class="form-control" placeholder="Enter the Description of the Barge" value="@Model.Description" />
                                 <span class="text-danger" id="erdescription"></span>
                             </div>
-                            <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
-                                <div class="m-1 col-md-4">
+                            <div class="form-group" style="display: flex; justify-content: space-between;">
+                                <div class="m-1 col-md-6" style="display: flex; align-items: center;">
                                     @if (Model.CurrentIndex > 0)
                                     {
                                         <button type="button" id="previousID"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
@@ -64,12 +64,9 @@
                                     }
 
                                 </div>
-                                <div class="form-btn col-md-8">
+                                <div class="form-btn col-md-6">
                                     <input type="submit" class="btn btn-primary m-2" value="Submit" id="btnid" />
-                                    <a href="@Url.Action("GoBack", "Maintenance")" class="btn btn-danger m-2 float-sm-end" style="width: 25% !important">Back</a>
-                                    <button class="btn btn-success m-2" id="exportBtn">Export</button>
-                                    <input type="file" id="fileInput" accept=".xlsx, .xls" style="display:none;">
-                                    <button id="importBtn" class="btn btn-success m-2">Import</button>
+                                    <a href="@Url.Action("GoBack", "Maintenance")" class="btn btn-danger m-2 float-sm-end" style="width: 100%!important">Back</a>                                    
                                 </div>
                             </div>
                         </div>
@@ -77,7 +74,7 @@
 
                 </div>
             </div>
-            <div class="col-sm-4"></div>
+            <div class="col-xl-4  col-md-3 col-sm-2"></div>
         </div>
         <div id="loader-overlay" style="display:none;">
             <div id="loader" class="popup-loader">
