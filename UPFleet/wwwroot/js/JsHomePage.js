@@ -26,6 +26,9 @@
         $.ajax({
             url: url,
             method: "GET",
+            beforeSend: function () {
+                $('#loader-overlay').show();  // Show loader before sending the request
+            },
             success: function (data) {
                 var bargeDropdown = $('#bargeDropdown');
                 bargeDropdown.empty(); // Clear existing options
@@ -38,6 +41,9 @@
                         bargeDropdown.append($('<option></option>').val(barge.Barge_Name).text(barge.Barge_Name));
                     });
                 }
+                setTimeout(function () {
+                    $('#loader-overlay').hide();
+                }, 2000);
             },
             //error: function () {
             //    console.log("Error loading barges");

@@ -11,39 +11,44 @@
                 <div class="card-header">
                     <h3 class="text-center text-primary">Add Barges</h3>
                 </div>
-                <form method="post" asp-action="CreateBarge" asp-controller="Maintenance" id="formid">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label asp-for="Barge_Name">Barge Name</label>
-                            <input type="text" asp-for="Barge_Name" class="form-control" id="Barge_Name" placeholder="Enter the Barge Name" />
-                            <span asp-validation-for="Barge_Name" id="erBarge_Name" class="text-danger"></span>
+                <form method="post" action="@Url.Action("CreateBarge", "Maintenance")" id="formid">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label name="Barge_Name">Barge Name</label>
+                                <input type="text" name="Barge_Name" class="form-control" id="Barge_Name" placeholder="Enter the Barge Name" />
+                                <span  id="erBarge_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Size">Size</label>
+                                <input type="text" name="Size" class="form-control" id="size" placeholder="Enter the Size of the Barge" />
+                                <span  id="ersize" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Rate">Rate ($)</label>
+                                <input type="text" class="form-control" name="Rate" style="text-align:right;" id="rate" value="0" placeholder="Enter the Rate of the Barge" />
+                                <span id="errate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Owner">Owner</label>
+                                <select name="Owner" id="owner" class="form-control form-select">
+                                    @foreach (var item in ViewBag.message)
+                                    {
+                                        <option value="@item.OwnerName">@item.OwnerName</option>
+                                    }
+                                </select>
+                                <span  id="erowner" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label name="Description">Description</label>
+                                <input type="text" class="form-control" name="Description" id="description" placeholder="Enter the Description of the Barge" />
+                                <span  id="erdescription" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="display: flex;align-items: center;justify-content: space-between;">
+                                <input type="submit" class="btn btn-primary m-2" value="Submit" id="btnid" />
+                                <a href="@Url.Action("HomePage", "Home")" class="btn btn-danger m-2 float-sm-end" style="width: 25% !important">Back</a>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Size"></label>
-                            <input type="text" asp-for="Size" class="form-control" id="size" placeholder="Enter the Size of the Barge" />
-                            <span asp-validation-for="Size" id="ersize" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Rate">Rate ($)</label>
-                            <input type="text" class="form-control" asp-for="Rate" style="text-align:right;" id="rate" value="0" placeholder="Enter the Rate of the Barge" />
-                            <span asp-validation-for="Rate" id="errate" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Owner"></label>
-                            <select asp-for="Owner" asp-items="@(new SelectList(ViewBag.message, "OwnerName", "OwnerName"))" id="owner" class="form-control form-select"></select>
-                            <span asp-validation-for="Owner" id="erowner" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Description"></label>
-                            <input type="text" class="form-control" asp-for="Description" id="description" placeholder="Enter the Description of the Barge" />
-                            <span asp-validation-for="Description" id="erdescription" class="text-danger"></span>
-                        </div>
-                        <div class="form-group" style="display: flex;align-items: center;justify-content: space-between;">
-                            <input type="submit" class="btn btn-primary m-2" value="Submit" id="btnid" />
-                            <a href="@Url.Action("HomePage", "Home")" class="btn btn-danger m-2 float-sm-end" style="width: 25% !important">Back</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
             </div>
         </div>
         <div class="col-sm-4"></div>

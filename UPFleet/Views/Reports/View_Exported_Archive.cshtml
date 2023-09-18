@@ -48,12 +48,11 @@
                     <td>@item.TaxType</td>
                     <td>@item.Amount</td>
                     <td>@item.SalesTaxAuth</td>
-
                 </tr>
             }
         </tbody>
     </table>
-    <div id="loader-overlay">
+    <div id="loader-overlay" style="display:none;">
         <div id="loader" class="popup-loader">
             <div class="spinner">
                 <div></div>
@@ -67,14 +66,5 @@
     </div>
 </div>
 @section Scripts{
-    <script>
-        $(document).ready(function () {
-            $("#prntbtn").click(function () {
-                $(".function-btn").hide();
-                window.print();
-                $(".function-btn").show();
-            });
-            $('#loader-overlay').hide();
-        });
-    </script>
+    <script src="~/wwwroot/js/JSPeachtreePage.js"></script>
 }

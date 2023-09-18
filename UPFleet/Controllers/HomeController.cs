@@ -16,7 +16,7 @@ namespace UPFleet.Controllers
         }
         public ActionResult HomePage()
         {
-            ViewBag.Ownerlist = _repository.GetOwnerList().Where(m => _repository.GetBargeList().Any(b => string.Compare(b.Owner, m.OwnerName, StringComparison.Ordinal) == 0)).OrderBy(m => m.OwnerName).ToList();            
+            ViewBag.Ownerlist = _repository.GetOwnerofBargesList();           
             return View();
         }
 

@@ -7,10 +7,8 @@
         var isDescriptionValid = validateDescription();
         var isOwnerValid = validateOwner();
 
-        var selectedValue = $("#Barge_Name").val();
-        var validbarge=filldata(selectedValue);
 
-        if (isBargeNameValid && isSizeValid && isRateValid && isDescriptionValid && isOwnerValid && validbarge) {
+        if (isBargeNameValid && isSizeValid && isRateValid && isDescriptionValid && isOwnerValid) {
             Swal.fire(
                 'Saved',
                 'Data Saved Successfully',
@@ -46,7 +44,7 @@
     $("#Barge_Name").blur(function () {
         var selectedValue = $("#Barge_Name").val();
         filldata(selectedValue);
-        
+
     });
     function filldata(selectedValue) {
         $.ajax({

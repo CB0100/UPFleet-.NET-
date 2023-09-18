@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using UPFleet.Models;
@@ -31,8 +32,7 @@ namespace UPFleet.Controllers
 
         public ActionResult Owner_list()
         {
-            var data = TempData["Datalist"] as string;
-            var obj = _repository.GetOwnerList().Where(m => _repository.GetBargeList().Any(b => b.Owner == m.OwnerName)).OrderBy(m => m.OwnerName).ToList();
+            var obj = _repository.GetOwnerofBargesList();
             obj.Insert(0, new Owner { OwnerName = "All" });
             return Json(obj,JsonRequestBehavior.AllowGet);
         }

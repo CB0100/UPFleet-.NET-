@@ -514,7 +514,7 @@ namespace UPFleet.Controllers
         [HttpGet]
         public ActionResult GetDetails(string barge = null, string owner = null)
         {
-            if (barge != null)
+                if (barge != null)
             {
                 var bargeDetails = _repository.GetBargeList().FirstOrDefault(b => b.Barge_Name?.ToLower() == barge.ToLower());
                 if (bargeDetails != null)
@@ -522,6 +522,14 @@ namespace UPFleet.Controllers
                     var response = new
                     {
                         bargeid = bargeDetails.ID
+                    };
+                    return Json(response,JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new
+                    {
+                        bargeid = 0
                     };
                     return Json(response, JsonRequestBehavior.AllowGet);
                 }
@@ -537,8 +545,17 @@ namespace UPFleet.Controllers
                     };
                     return Json(response, JsonRequestBehavior.AllowGet);
                 }
+                else
+                {
+                    var response = new
+                    {
+                        ownerid = 0
+                    };
+                    return Json(response, JsonRequestBehavior.AllowGet);
+                }
             }
-            return Json(null);
+            return Json("Error Occured");
+
         }
 
         //Updating Transaction deatils on clicking Update transaction button..

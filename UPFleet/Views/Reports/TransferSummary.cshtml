@@ -10,6 +10,9 @@
             <img src="~/wwwroot/image/printing.png">
         </a>*
     </div>
+    @try
+    {
+
     <div class="table-responsive">
         <table class="table" id="printTable">
             <thead>
@@ -112,6 +115,11 @@
             @*<img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />*@
         </div>
     </div>
+    }
+    catch (Exception)
+    {
+        Response.RedirectToRoute(new { controller = "Error", action = "Index" });
+    }
 </body>
 </html>
 @{

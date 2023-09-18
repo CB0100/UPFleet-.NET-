@@ -11,6 +11,8 @@
         <a href="@Url.Action("GoBack", "Maintenance")" id="backbtn" class="btn-primary">Back</a>
         @*<a id="prntbtn" title="Print This Report"><img src="../image/printing.png"></a>*@
     </div>
+    @try
+    {
     <div class=" table-responsive">
         <table class="border border-1 table table-striped">
             <tr>
@@ -76,6 +78,12 @@
             }
         </table>
     </div>
+
+                            }
+                            catch (Exception)
+                            {
+                                Response.RedirectToRoute(new { controller = "Error", action = "Index" });
+                            }
 </body>
 </html>
 @{

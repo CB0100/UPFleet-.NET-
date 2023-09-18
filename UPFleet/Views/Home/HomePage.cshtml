@@ -4,43 +4,62 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@try
+{
+    <div class="main-content-area pb">
+        <div class="main-content-area-wrapper row ">
+            <div class="col-lg-5 col-md-6 col-sm-10">
+                <div class="card main-content-card">
+                    <div class="card-header text-capitalize bg-gradient card-header-text">
+                        <label>UPFleet Barge Selection</label>
+                        <a href="@Url.Action("CreateBarge","Maintenance")" class="button btn btn-primary home-btn" style="max-width: 110px">Add Barge</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="inline-block flex-corner">
 
-<div class="main-content-area pb">
-    <div class="main-content-area-wrapper row ">
-        <div class="col-lg-5 col-md-6 col-sm-10">
-            <div class="card main-content-card">
-                <div class="card-header text-capitalize bg-gradient card-header-text">
-                    <label>UPFleet Barge Selection</label>
-                    <a href="@Url.Action("CreateBarge","Maintenance")" class="button btn btn-primary home-btn" style="max-width: 110px">Add Barge</a>
-                </div>
-                <div class="card-body">
-                    <div class="inline-block flex-corner">
-                        
-                       
-                    </div>
-                    <span>Filter By Owner</span>
-                    <select id="ownerDropdown" class="form-control form-select home-select">
-                        <option value="All" selected="">All</option>
-                        @foreach (var owner in ViewBag.OwnerList)
-                        {
-                            <option value="@owner.OwnerName">@owner.OwnerName</option>
-                        }
-                    </select>
-                    <span>Select a barge from the list</span> 
-                    <div class="form-group cus-icon">
-                        <select id="bargeDropdown" class="form-control form-select">
-                            <!-- Barge options will be dynamically populated here -->
+
+                        </div>
+                        <span>Filter By Owner</span>
+                        <select id="ownerDropdown" class="form-control form-select home-select">
+                            <option value="All" selected="">All</option>
+                            @foreach (var owner in ViewBag.OwnerList)
+                            {
+                                <option value="@owner.OwnerName">@owner.OwnerName</option>
+                            }
                         </select>
+                        <span>Select a barge from the list</span>
+                        <div class="form-group cus-icon">
+                            <select id="bargeDropdown" class="form-control form-select">
+                                <!-- Barge options will be dynamically populated here -->
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer card-action-control">
-                    <button class="btn btn-primary home-btn" id="okButton">OK</button>
+                    <div class="card-footer card-action-control">
+                        <button class="btn btn-primary home-btn" id="okButton">OK</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div id="loader-overlay" style="display:none;">
+        <div id="loader" class="popup-loader">
+            <div class="spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            @*<img src="~/wwwroot/image/cargando.gif" style="max-width: 20%;min-width:20%" />*@
+        </div>
+    </div>
+}
+catch (Exception)
+{
+    Response.RedirectToRoute(new { controller = "Error", action = "Index" });
+}
 
-@section Scripts{   
+
+@section Scripts{
     <script src="~/wwwroot/js/jshomepage.js"></script>
 }

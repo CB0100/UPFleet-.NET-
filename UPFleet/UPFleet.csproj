@@ -169,9 +169,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Context\ApplicationDbContext.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Filters\CustomErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -236,6 +238,7 @@
     <Content Include="wwwroot\js\JsHomePage.js" />
     <Content Include="wwwroot\js\JsIndexPage.js" />
     <Content Include="wwwroot\js\Jsowner.js" />
+    <Content Include="wwwroot\js\JSPeachtreePage.js" />
     <Content Include="wwwroot\js\JSPreviewToExport.js" />
     <Content Include="wwwroot\js\JsReport.js" />
     <Content Include="wwwroot\js\site.js" />
@@ -291,7 +294,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Maintenance\BargeUpdate.cshtml" />
     <Content Include="Views\Maintenance\CreateBarge.cshtml" />
@@ -335,9 +337,12 @@
     <Content Include="Views\Shared\_TransfersGrid.cshtml" />
     <Content Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Include="Views\Shared\PaginationPartial.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_ErrorHandlingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

@@ -19,9 +19,13 @@ namespace UPFleet.Repositories
         {
             return _dbcontext.Barges.Where(b => b.Barge_Name.ToLower().Contains(term.ToLower())).Select(b => b.Barge_Name).ToList();
         }
+        public List<Owner> GetOwnerofBargesList()
+        {
+            return _dbcontext.Owners.Where(m => _dbcontext.Barges.Any(b => b.Owner == m.OwnerName)).OrderBy(m => m.OwnerName).ToList(); ;
+        }
         public List<Owner> GetOwnerList()
         {
-            return _dbcontext.Owners.ToList();
+            return _dbcontext.Owners.ToList(); ;
         }
         public List<Transfer> GetTransferList()
         {

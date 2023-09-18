@@ -31,7 +31,9 @@
                 data.forEach(function (item) {
                     dropdownOwner.append($("<option>").val(item.OwnerName).text(item.OwnerName));
                 });                
-                $('#loader-overlay').hide();
+                setTimeout(function () {
+                    $('#loader-overlay').hide();
+                }, 3000);
             }
         });
     }
@@ -61,7 +63,9 @@
                     tableBody.append(row);
                 });
                 if (!isfirst) {
-                    $('#loader-overlay').hide();
+                    setTimeout(function () {
+                        $('#loader-overlay').hide();
+                    }, 3000);
                 }     
                 isfirst = false;
             }

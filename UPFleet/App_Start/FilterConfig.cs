@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using UPFleet.Filters;
 
 namespace UPFleet
 {
@@ -7,7 +8,7 @@ namespace UPFleet
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomErrorAttribute());
         }
     }
 }

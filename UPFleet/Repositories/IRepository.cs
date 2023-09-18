@@ -9,6 +9,7 @@ namespace UPFleet.Repositories
         List<Barge> GetBargeList();
         List<string> GetBargeNameList(string term);
         List<Owner> GetOwnerList();
+        List<Owner> GetOwnerofBargesList();
         List<Transfer> GetTransferList();
         List<Transaction> GetTransactionList();
         double? GetTransactionCount();
